@@ -7,11 +7,11 @@ if(NOT USE_CONAN)
 endif()
 
 # non-test libraries
-find_package(Microsoft.GSL REQUIRED)
-find_package(absl REQUIRED)
-find_package(fmt REQUIRED)
-find_package(spdlog REQUIRED)
+find_package(Microsoft.GSL QUIET REQUIRED)
+find_package(absl QUIET REQUIRED)
+find_package(fmt QUIET REQUIRED)
+find_package(spdlog QUIET REQUIRED)
 
 # test libraries
-find_package(GTest REQUIRED)
-find_package(doctest REQUIRED)
+find_package(GTest QUIET REQUIRED)
+find_package(doctest QUIET REQUIRED)
