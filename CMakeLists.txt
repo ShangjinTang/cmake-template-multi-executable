@@ -154,6 +154,12 @@ function(add_executables_from_subdirectories DIRECTORY)
 
       add_dependencies(${run_all_targets} ${run_target})
 
+      if(NOT "${previous_run_target}" STREQUAL "")
+        add_dependencies(${run_target} ${previous_run_target})
+      endif()
+
+      set(previous_run_target ${run_target})
+
     endif()
   endforeach()
 endfunction()
