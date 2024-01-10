@@ -8,7 +8,7 @@ endif()
 
 find_program(CPPCHECK_BIN NAMES cppcheck)
 if(CPPCHECK_BIN)
-  message(STATUS "Found: cppcheck")
+  message(VERBOSE "Found: cppcheck")
   list(
     APPEND
     CMAKE_CXX_CPPCHECK
@@ -22,7 +22,6 @@ if(CPPCHECK_BIN)
     "--suppressions-list=${CMAKE_SOURCE_DIR}/cppcheck_suppressions.txt"
     "--xml"
     "--output-file=${CMAKE_BINARY_DIR}/cppcheck.xml")
-  message("cppcheck finished setting up.")
 else()
   message(SEND_ERROR "cppcheck requested but executable not found.")
 endif()

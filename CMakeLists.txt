@@ -32,10 +32,8 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
     cmake [options] -S . -B build\n")
 endif()
 
-# Start building
-message(
-  STATUS
-    "Started CMake for ${CMAKE_PROJECT_NAME} v${CMAKE_PROJECT_VERSION}...\n")
+message(VERBOSE
+        "Started CMake for ${CMAKE_PROJECT_NAME} v${CMAKE_PROJECT_VERSION}")
 
 # Set required C++ Standard
 set(CMAKE_CXX_STANDARD 20)

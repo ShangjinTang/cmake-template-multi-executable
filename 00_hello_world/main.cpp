@@ -48,7 +48,7 @@ size_t getStringLength(gsl::not_null<std::string *> strPtr) {
 #endif
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
-    std::cout << "\n----------------------------------------------------------------------\n";
+    std::cout << "----------------------------------------------------------------------\n";
 
 #ifdef ENABLE_ABSL_FLAGS
     absl::ParseCommandLine(argc, argv);
@@ -78,6 +78,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
     fmt::print("{}, {}!\n", "Hello", "{fmt}");
     spdlog::info("Welcome to spdlog!");
 
-    std::cout << "----------------------------------------------------------------------\n\n";
+    std::cout << "----------------------------------------------------------------------\n";
     return 0;
 }
