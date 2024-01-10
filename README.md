@@ -1,55 +1,43 @@
 # Modern CMake Template for Multi Executable
 
-This repository aims to represent a template for Modern C++ with multiple executable files.
+This repository is derived from [Modern CMake Template for Libraries](https://github.com/ShangjinTang/cmake-template), aims to represent a template for Modern C++ with multiple executable files.
 
-It's good for C++ demo:
+It's a good template for demos, tutorials, scratchpads, etc.
 
-- Every subdirectory is a standalone project.
+## Introduction
+
+- Every subdirectory is a standalone project, must have a `main` entry.
+  - For example, to add projects `foo` and `bar`, directory tree should be as below:
+    ```text
+    .
+    ├── foo
+    │   ├── foo.h
+    │   └── foo.cpp
+    ├── bar
+    │   ├── inc/bar.h
+    │   └── src/bar.cpp
+    ├── ...
+    ├── CMakeLists.txt
+    └── README.md
+    ```
+  - Header file should be placed at `inc`, or same directory as source file.
+  - Source files are globbed (though it's an anti-pattern in CMake).
 - No need to add `CMakeLists.txt` for every subdirectory.
-- Link useful libraries for every subdirectory without install first.
+- Link useful libraries for every subdirectory without install first, including:
   - `spdlog`
   - `fmt`
   - `doctest`
   - `gtest`
   - `ms-gsl`
 
-## Important Note
-
-It's not for library use, so every subdirectory must have a `main` entry. If you want to develop a library, see: [CMake Template](https://github.com/ShangjinTang/cmake-template).
-
-1. Do not have dependencies between subdirectories.
-2. When you add new project, structure should be as below. Header file should be placed at `inc`, or same directory as source files.
-   ```text
-   .
-   ├── foo
-   │   ├── foo.h
-   │   └── foo.cpp
-   ├── bar
-   │   ├── inc/bar.h
-   │   └── src/bar.cpp
-   ├── ...
-   ├── CMakeLists.txt
-   └── README.md
-   ```
-3. Use `glob` to automatically search all source files, though it's an anti-pattern in CMake.
-
-## Resources
-
-- CMake:
-  - Official: [Getting Started](https://cmake.org/getting-started/)
-  - OnLine Book: [Modern CMake](https://cliutils.gitlab.io/modern-cmake/)
-  - Introduction Video: [CppCon 2017: Mathieu Ropert “Using Modern CMake Patterns to Enforce a Good Modular Design”](https://www.youtube.com/watch?v=eC9-iRN2b04)
-- Conan:
-  - Official: [conan.io](https://conan.io/)
-
 ## Requirements
 
-- a modern C++20 compiler (suggest to use latest `gcc-13`, `clang-17`, `MSVC 2022` or above)
-- [`cmake`](https://cmake.org) 3.15+
-- [`conan`](https://conan.io) 2.0+
+- a modern C++20 compiler (suggest to use `gcc-13`, `clang-17`, `MSVC 2022` or above)
+- [`cmake`](https://cmake.org) 3.15+ (required)
+- [`conan`](https://conan.io) 2.0+ (required)
 - `cppcheck` (optional)
 - `clang-tidy` (optional)
-- `clang-format` (optional for code format)
+- `clang-format` (optional)
 
 ## Features
 
@@ -57,7 +45,6 @@ It's not for library use, so every subdirectory must have a `main` entry. If you
 - Conan support for dependency management in CMake, completely optional
 - Code check tools such as `clang-format`, `cppcheck`
 - Sanitizers: Address Sanitizer, Leak Sanitizer, Undefined Behaviour Sanitizer, ...
-- Support for shared/static libraries, including generation of export information
 
 ## Repository layout
 
