@@ -76,6 +76,10 @@ include(cppcheck)
 # ##############################################################################
 
 function(add_executables_from_subdirectories DIRECTORY)
+
+  set(run_all_targets "run")
+  add_custom_target(${run_all_targets})
+
   file(
     GLOB subdirs
     RELATIVE ${DIRECTORY}
@@ -147,6 +151,8 @@ function(add_executables_from_subdirectories DIRECTORY)
         WORKING_DIRECTORY ${DIRECTORY}/${subdir}
         DEPENDS ${build_target}
         COMMENT "Running ${subdir}/${executable_filename}")
+
+      add_dependencies(${run_all_targets} ${run_target})
 
     endif()
   endforeach()
