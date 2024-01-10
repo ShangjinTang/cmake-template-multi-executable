@@ -85,42 +85,43 @@ function(add_executables_from_subdirectories DIRECTORY)
     if(IS_DIRECTORY ${DIRECTORY}/${subdir} AND NOT ${subdir} MATCHES
                                                "build|cmake|.git|.cache")
 
-      set(target_name ${subdir}) # use directory name as CMake target name
-      set(executable_filename a.out) # use `a.out` as target executable filename
-      set(include_dir)
+      set(build_target "${subdir}")
+      set(run_target "run-${subdir}")
+      set(executable_filename "a.out")
 
       # glob all files
       file(GLOB_RECURSE sources ${DIRECTORY}/${subdir}/*.cpp)
 
       # define target executable according to options
-      add_executable(${target_name} ${sources})
+      add_executable(${build_target} ${sources})
 
       # try include `inc` if seperate `inc` / `src` directories is used
       if(EXISTS "${DIRECTORY}/${subdir}/inc")
-        target_include_directories(${target_name}
+        target_include_directories(${build_target}
                                    PRIVATE "${DIRECTORY}/${subdir}/inc")
       endif()
 
       # generate executable in source file directory
-      set_target_properties(${target_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-                                                      "${DIRECTORY}/${subdir}")
-      set_target_properties(${target_name} PROPERTIES OUTPUT_NAME
-                                                      "${executable_filename}")
+      set_target_properties(${build_target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+                                                       "${DIRECTORY}/${subdir}")
+      set_target_properties(${build_target} PROPERTIES OUTPUT_NAME
+                                                       "${executable_filename}")
 
       # set target compile options as defined in the
       # cmake/compiler_options.cmake Module
-      target_compile_options(${target_name} PRIVATE ${compiler_options})
+      target_compile_options(${build_target} PRIVATE ${compiler_options})
 
       # add compiler definition
-      target_compile_definitions(${target_name} PRIVATE ${compiler_definitions})
+      target_compile_definitions(${build_target}
+                                 PRIVATE ${compiler_definitions})
 
       # set target link options as defined in the cmake/compiler_options.cmake
       # Module
-      target_link_options(${target_name} PRIVATE ${linker_flags})
+      target_link_options(${build_target} PRIVATE ${linker_flags})
 
       # link against libraries
       target_link_libraries(
-        ${target_name}
+        ${build_target}
         PRIVATE # ##############################################################
                 # abseil
                 absl::flags
@@ -140,20 +141,15 @@ function(add_executables_from_subdirectories DIRECTORY)
                 # ##############################################################
       )
 
-      add_custom_command(
-        TARGET ${target_name}
-        POST_BUILD
-        COMMAND ${executable_filename}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${subdir}
+      add_custom_target(
+        ${run_target}
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/${subdir}/${executable_filename}
+        WORKING_DIRECTORY ${DIRECTORY}/${subdir}
+        DEPENDS ${build_target}
         COMMENT "Running ${subdir}/${executable_filename}")
+
     endif()
   endforeach()
 endfunction()
-
-add_custom_target(all_subdirs)
-
-add_custom_target(default)
-
-add_dependencies(default all_subdirs)
 
 add_executables_from_subdirectories(${CMAKE_CURRENT_SOURCE_DIR})
