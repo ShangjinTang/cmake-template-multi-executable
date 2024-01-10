@@ -120,8 +120,15 @@ function(add_executables_from_subdirectories DIRECTORY)
 
       # link against libraries
       target_link_libraries(
-        ${target_name} PRIVATE doctest::doctest gtest gtest_main
-                               Microsoft.GSL::GSL fmt spdlog::spdlog)
+        ${target_name}
+        PRIVATE doctest::doctest
+                gtest
+                gtest_main
+                Microsoft.GSL::GSL
+                fmt
+                spdlog::spdlog
+                absl::flags
+                absl::flags_parse)
 
       add_custom_command(
         TARGET ${target_name}

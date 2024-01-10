@@ -1,3 +1,8 @@
+#include <iostream>
+#include <string>
+
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
 #include "fmt/core.h"
 #include "gsl/gsl"
 #include "spdlog/spdlog.h"
@@ -30,9 +35,14 @@ TEST(Subtraction, Integers) {
 }
 #endif
 
+// ms-gsl
 void processString(gsl::not_null<std::string *> strPtr) {
     fmt::print("Length of string '{}': {}\n", *strPtr, strPtr->length());
 }
+
+// abseil: ABSL_FLAG(type, name, default, help-text)
+// NOLINTNEXTLINE
+ABSL_FLAG(std::string, powered_by, "abseil-cpp", "Powered-By Information");
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
 #ifdef ENABLE_DOCTEST_EXAMPLE
@@ -56,9 +66,13 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
     // fmtlib
     fmt::print("{}, {}!\n", "Hello", "{fmt}");
 
-    // gsl
+    // ms-gsl
     std::string str = "ms-gsl";
     processString(&str);
+
+    // abseil
+    absl::ParseCommandLine(argc, argv);
+    std::cout << "Support parse flags, powered by: " << absl::GetFlag(FLAGS_powered_by) << std::endl;
 
     return 0;
 }
