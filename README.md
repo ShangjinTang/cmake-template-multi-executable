@@ -24,11 +24,14 @@ It's a good template for demos, tutorials, scratchpads, etc.
   - Source files are globbed (though it's an anti-pattern in CMake).
 - No need to add `CMakeLists.txt` for every subdirectory.
 - Link useful libraries for every subdirectory without install first, including:
-  - `spdlog`
-  - `fmt`
-  - `doctest`
-  - `gtest`
-  - `ms-gsl`
+  - non test libraries:
+    - `abseil`
+    - `fmt`
+    - `ms-gsl`
+    - `spdlog`
+  - test libraries:
+    - `doctest`
+    - `gtest`
 
 ## Requirements
 
